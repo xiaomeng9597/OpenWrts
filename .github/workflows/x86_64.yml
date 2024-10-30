@@ -56,7 +56,7 @@ jobs:
     - name: Load UserConfiguration
       run: |
         echo "🚀 Executing User Configuration Scripts "
-        chmod +x configure.sh && chmod +x package.sh && chmod +x compile.sh
+        chmod +x configure.sh && chmod +x package.sh
         mv configs/ compile.sh openwrt/
         cd openwrt
         $GITHUB_WORKSPACE/configure.sh
@@ -71,7 +71,8 @@ jobs:
     - name: Compile the firmware
       id: compile
       run: |
-        cd openwrt && ./compile.sh
+        cd openwrt 
+        chmod +x compile.sh && ./compile.sh
 
     - name: Check space usage
       if: (!cancelled())

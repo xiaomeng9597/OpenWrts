@@ -12,7 +12,7 @@ env:
   CONFIG_FILE: configs/x86_64.config
   CONFIG_SH: configure.sh
   PACKS_SH: package.sh
-  EXTEND_DRIVER: true
+  EXTEND_DRIVER: false
   OUTPUT_DIR: firmwares
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -31,6 +31,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL https://raw.githubusercontent.com/bigbugcc/openwrts/master/openwrt-env)
         sudo -E apt-get -qq autoremove --purge
@@ -38,6 +39,16 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
+
+    - name: Free Disk Space
+      uses: jlumbroso/free-disk-space@main
+      with:
+        tool-cache: true
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        swap-storage: true
 
     - name: Clone source code
       working-directory: /workdir

@@ -28,14 +28,14 @@ firmware_rename() {
 # Init config file
 init_config(){
     echo "🚀 Loading model profiles "
-    $CONFIG_FILE > .config
+    cat $CONFIG_FILE > .config
 
     if [ "$EXTEND_DRIVER" == "true" ]; then
         echo "🚀 Loading extend drivers"
-        configs/Driver.config >> .config
+        cat configs/Driver.config >> .config
     fi
 
-    $1 >> .config && make defconfig
+    cat $1 >> .config && make defconfig
     echo "📋 Configuration Info: "
     cat .config
 }

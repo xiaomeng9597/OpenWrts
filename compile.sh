@@ -42,7 +42,7 @@ init_config(){
 
 main() {
 
-    config_names=$(ls "$LUCI_DIR"/*.config | xargs -n 1 basename | sed 's/\.config$//' | tr '[:upper:]' '[:lower:]')
+    config_names=$(ls "$LUCI_DIR"/*.config | xargs -n 1 basename | sed 's/\.config$//')
     echo "📕Configuration files: $config_names"
 
     if [ "$(echo $LUCI_CONFIG | tr '[:upper:]' '[:lower:]')" == "all" ]; then
@@ -54,13 +54,9 @@ main() {
             firmware_rename
         done 
     else
-        # Convert $LUCI_CONFIG to lowercase
-        config=$(echo "$LUCI_CONFIG" | tr '[:upper:]' '[:lower:]')
-
-        # Check if $luci_config_lower is in $config_names
-        if echo "$config_names" | grep -qw "$config"; then
-            echo "🚀 Compiling OpenWrt with $config"
-            init_config "$config"
+        if echo "$config_names" | grep -i -qw "$LUCI_CONFIG"; then
+            echo "🚀 Compiling OpenWrt with $LUCI_CONFIG"
+            init_config "$LUCI_CONFIG"
             compile_openwrt
             firmware_rename
         else

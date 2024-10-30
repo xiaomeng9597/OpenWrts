@@ -35,7 +35,7 @@ init_config(){
         cat configs/Driver.config >> .config
     fi
 
-    cat configs/$1.config >> .config && make defconfig
+    cat $LUCI_DIR/$1.config >> .config && make defconfig
     echo "📋 Configuration Info: "
     cat .config
 }

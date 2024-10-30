@@ -72,6 +72,7 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/configure.sh
         $GITHUB_WORKSPACE/package.sh
+        ls -al
 
     - name: Update and Install feeds
       run: |
@@ -80,8 +81,7 @@ jobs:
         
     - name: Compile the firmware
       id: compile
-      working-directory: openwrt
-      run: compile.sh
+      run: ./openwrt/compile.sh
 
     - name: Check space usage
       if: (!cancelled())

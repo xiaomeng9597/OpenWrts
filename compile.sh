@@ -9,7 +9,10 @@ compile_openwrt() {
     make download -j$(nproc)
     make -j$(nproc) V=s || make -j4 V=s
     rm -rf packages
-    echo "status=success" >> $GITHUB_OUTPUT
+
+    if ls "$OUTPUT_DIR"/* | grep -q 'openwrt'; then
+        echo "status=success" >> $GITHUB_OUTPUT
+    fi
 }
 
 # Rename the compiled firmware with the configuration file name appended

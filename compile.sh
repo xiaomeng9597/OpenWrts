@@ -29,13 +29,13 @@ firmware_rename() {
 init_config(){
     echo "🚀 Loading model profiles "
     cat $CONFIG_FILE > .config
-
     if [ "$EXTEND_DRIVER" == "true" ]; then
         echo "🚀 Loading extend drivers"
         cat configs/Driver.config >> .config
     fi
-
+    echo "🚀 Loading Luci app"
     cat $LUCI_DIR/$1.config >> .config && make defconfig
+    sed -i '/CONFIG_DEFAULT_luci/'d .config
     echo "📋 Configuration Info: "
     cat .config
 }

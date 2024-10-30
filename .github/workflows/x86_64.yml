@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  OPNAME: 'x86_64'
+  OPNAME: 'x86_64[Beta]'
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   LUCI_CONFIG: All
@@ -102,6 +102,8 @@ jobs:
       if: steps.compile.outputs.status == 'success' && !cancelled()
       run: |
         echo "![](https://img.shields.io/github/downloads/${{ github.repository }}/${{ steps.tag.outputs.release_tag }}/total?style=flat-square)" >> release.txt
+        echo "测试固件请不要下载安装或升级!" >> release.txt
+        echo "Please do not download, install or upgrade the test firmware !" >> release.txt
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1

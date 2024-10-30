@@ -35,7 +35,7 @@ init_config(){
         cat configs/Driver.config >> .config
     fi
 
-    cat $1 >> .config && make defconfig
+    cat configs/$1.config >> .config && make defconfig
     echo "📋 Configuration Info: "
     cat .config
 }

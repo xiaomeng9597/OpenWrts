@@ -27,9 +27,9 @@ init_config(){
     echo "🚀 Loading model profiles "
     $CONFIG_FILE > openwrt/.config
 
-    if[$EXTEND_DRIVER == "true"]; then
+    if [$EXTEND_DRIVER == "true"]; then
         echo "🚀 Loading extend drivers"
-        "configs/Driver.config" >> openwrt/.config
+        configs/Driver.config >> openwrt/.config
     fi
 
     $1 >> openwrt/.config && make defconfig

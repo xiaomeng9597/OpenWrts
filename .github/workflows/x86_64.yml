@@ -81,7 +81,7 @@ jobs:
         
     - name: Compile the firmware
       id: compile
-      run: ./openwrt/compile.sh
+      run: cd openwrt && ./compile.sh
 
     - name: Check space usage
       if: (!cancelled())

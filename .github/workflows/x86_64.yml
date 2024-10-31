@@ -72,7 +72,9 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/configure.sh
         $GITHUB_WORKSPACE/package.sh
-        ls -al
+        echo "======== Feeds configuration ========"
+        cat feeds.conf.default
+        echo "======== Feeds configuration End ========"
 
     - name: Update and Install feeds
       run: |

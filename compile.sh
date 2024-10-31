@@ -12,6 +12,9 @@ compile_openwrt() {
 
     if ls "$OUTPUT_DIR"/* | grep -q 'openwrt'; then
         echo "status=success" >> $GITHUB_OUTPUT
+    else
+        echo "status=failure" >> $GITHUB_OUTPUT
+        exist 1
     fi
 }
 
@@ -34,7 +37,8 @@ init_config(){
         cat configs/Driver.config >> .config
     fi
     echo "🚀 Loading Luci app"
-    cat $LUCI_DIR/$1.config >> .config && make defconfig
+    cat "$LUCI_DIR/$1.config" >> .config 
+    make defconfig
     sed -i '/CONFIG_DEFAULT_luci/'d .config
     echo "📋 Configuration Info: "
     cat .config

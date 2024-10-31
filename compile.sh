@@ -7,13 +7,15 @@ mkdir -p "$OUTPUT_DIR"
 # Compile OpenWrt
 compile_openwrt() {
     make download -j$(nproc)
+    find dl -size -1024c -exec ls -l {} \;
+    find dl -size -1024c -exec rm -f {} \;
     make -j$(nproc) V=s || make -j4 V=s
 
     if ls bin/targets/*/* | grep -q 'openwrt'; then
         echo "status=success" >> $GITHUB_OUTPUT
     else
         echo "status=failure" >> $GITHUB_OUTPUT
-        exist 1
+        exit 1
     fi
 
 }
@@ -24,7 +26,7 @@ firmware_rename() {
         echo "status=success" >> $GITHUB_OUTPUT
     else
         echo "status=failure" >> $GITHUB_OUTPUT
-        exist 1
+        exit 1
     fi
 
     # Get all files in bin/targets/*/* that contain 'openwrt' in their name

@@ -8,18 +8,25 @@ mkdir -p "$OUTPUT_DIR"
 compile_openwrt() {
     make download -j$(nproc)
     make -j$(nproc) V=s || make -j4 V=s
-    rm -rf packages
 
+    if ls bin/targets/*/* | grep -q 'openwrt'; then
+        echo "status=success" >> $GITHUB_OUTPUT
+    else
+        echo "status=failure" >> $GITHUB_OUTPUT
+        exist 1
+    fi
+
+}
+
+# Rename the compiled firmware with the configuration file name appended
+firmware_rename() {
     if ls "$OUTPUT_DIR"/* | grep -q 'openwrt'; then
         echo "status=success" >> $GITHUB_OUTPUT
     else
         echo "status=failure" >> $GITHUB_OUTPUT
         exist 1
     fi
-}
 
-# Rename the compiled firmware with the configuration file name appended
-firmware_rename() {
     # Get all files in bin/targets/*/* that contain 'openwrt' in their name
     firmware_files=$(ls bin/targets/*/* | grep 'openwrt')
     for firmware_file in $firmware_files; do

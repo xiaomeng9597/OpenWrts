@@ -9,7 +9,7 @@ compile_openwrt() {
     make download -j$(nproc)
     find dl -size -1024c -exec ls -l {} \;
     find dl -size -1024c -exec rm -f {} \;
-    make -j$(nproc) V=s || make -j4 V=s
+    make -j3 V=s || make -j4 V=s
 
     if ls bin/targets/*/* | grep -q 'openwrt'; then
         echo "status=success" >> $GITHUB_OUTPUT

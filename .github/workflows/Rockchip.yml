@@ -44,6 +44,12 @@ jobs:
     - name: Space Usage
       run: df -hT
 
+    - name: mnt dir
+      run: |
+        sudo apt-get install tree
+        cd /mnt
+        tree --filelimit 6 -h -L 3
+
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive

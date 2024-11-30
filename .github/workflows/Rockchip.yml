@@ -6,7 +6,7 @@ on:
 
 env:
   OPNAME: 'R68S、R2S、R4S、R5C、R5S、OPiR1Plus'
-  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_URL: https://github.com/xiaomeng9597/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   EXTERNAL_FILE: configs/luci/Standard.config
